@@ -1,5 +1,3 @@
-// CHC live subscriber counts via YouTube Data API. Vercel serverless function.
-// Set env var YOUTUBE_API_KEY in Vercel project settings.
 const CHANNELS = [
   {name:"ZND", url:'https://www.youtube.com/@zndshort', id:'UC6ijHqJ-0dJ7aESPtulcasA'},
   {name:"the same Wednesday", url:'https://www.youtube.com/@fake_ortega', id:'UCFclDHDKialIVdAB9hB4HMA'},
