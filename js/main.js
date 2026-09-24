@@ -100,8 +100,7 @@ const heroInner=document.getElementById('heroInner');
 let clock=new THREE.Clock(false),booted=false;
 function frame(){
   requestAnimationFrame(frame);
-  if(scrollY>H()*1.15){return;} // pause render when scrolled past hero
-  const t=clock.getElapsedTime();
+  if(scrollY>H()*1.15){return;}   const t=clock.getElapsedTime();
   const sIn=clamp((t-0.15)/0.5),sOut=1-clamp((t-(T.EXP_START-0.3))/0.5);
   spark.style.opacity=(sIn*sOut*0.9).toFixed(3);
   spark.style.transform=`translate(-50%,-50%) scale(${0.85*(0.6+0.4*Math.sin(t*3))})`;
@@ -133,14 +132,14 @@ try{font=new FontLoader().parse(ANTON);build();buildTimeline();
     heroInner.style.opacity=1;heroInner.style.transform='none';}
   frame();
 }catch(err){document.getElementById('boot').innerHTML='<div style="color:#9c9180;font:13px Inter">Init failed: '+err.message+'</div>';}
-/* intro -> hero gate */
+
 window.__startHero=function(){try{if(clock&&!clock.running)clock.start();}catch(_){}};
 if(typeof REDUCED!=='undefined'&&REDUCED)window.__startHero();
 else if(!window.__introPending)window.__startHero();
 
-/* ---- scroll reveal ---- */
-/* ---- creators (edit subs / url / drop pfp in assets/creators/<slug>.webp) ---- */
-/* ---- creators: LIVE subs via /api/subs (YouTube), embedded fallback ---- */
+
+
+
 const FALLBACK_CREATORS=[
   {name:'ZND',                  subs:'10.5M', url:'https://www.youtube.com/@zndshort'},
   {name:'the same Wednesday',   subs:'10.3M', url:'https://www.youtube.com/@fake_ortega'},
@@ -197,13 +196,13 @@ fetch('/api/subs').then(r=>r.ok?r.json():Promise.reject()).then(d=>{const list=A
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.18});
 document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 
-/* ---- count-up stats ---- */
+
 function countUp(el){const target=+el.dataset.count,suf=el.dataset.suffix||'';const dur=1400,t0=performance.now();
   (function step(now){const p=clamp((now-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=Math.round(target*e)+suf;if(p<1)requestAnimationFrame(step);})(t0);}
 const sio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){countUp(e.target);sio.unobserve(e.target);}});},{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>sio.observe(el));
 
-/* ---- music: loops assets/music.mp3 (Brooklyn Bloodpop). Autostarts on first tap/click. ---- */
+
 const audio=new Audio('assets/music.mp3');
 audio.preload='auto'; audio.loop=true; audio.volume=0.5;
 let playing=false;
